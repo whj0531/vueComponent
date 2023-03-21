@@ -1,0 +1,33 @@
+@use './mixin' as m;
+@use './variables' as v;
+
+.toast {
+  // visibility: hidden;
+  position: fixed;
+  left: 50%;
+  bottom: 6rem;
+  width: calc(100% - 4rem);
+  padding: 2rem;
+  background-color: rgba(v.$black, 0.8);
+  border-radius: 1rem;
+  box-sizing: border-box;
+  @include m.font($color: v.$white, $font-size: 1.4rem);
+  transform: translate(-50%, 0);
+}
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all .3s;
+}
+.slide-up-enter-from, 
+.slide-up-leave-to {
+  transform: translate(-50%, 100%);
+  opacity: 0;
+}
+.slide-down-enter-active, 
+.slide-down-leave-active {
+  transition: transform .3s;
+}
+.slide-down-enter-from, 
+.slide-down-leave-to {
+  transform: translate(-50%, 0);
+}
