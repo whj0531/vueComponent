@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Home from '../views/Home.vue'
 import Accordion from '@/views/Accordion.vue'
 import Form from '@/views/Form.vue'
 import Modal from '@/views/Modal.vue'
@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: Home
     },
     {
       path: '/accordion',
