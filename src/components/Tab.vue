@@ -2,10 +2,14 @@
 import { ref, inject, watch, onBeforeMount } from 'vue'
 import type { TabInterface } from './Tabs.vue'
 
+  const props = defineProps<{
+    active?: boolean
+  }>()
+
   const tabs = inject<TabInterface>('tabs-array')
   const randomString = tabs !== undefined? tabs.id : null
   const index = ref<number>(0)
-  const isActive = ref(false)
+  const isActive = ref(props.active)
 
   watch(
     () => tabs?.selected,
