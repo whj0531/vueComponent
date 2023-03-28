@@ -83,6 +83,13 @@ body {
   position: relative;
 }
 
+pre {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -96,7 +103,7 @@ body {
   z-index: 100;
   width: 100%;
   height: 6rem;
-  background-color: #6c2aef;
+  background-color: #454ce1;
 }
 .header .title {
   padding: 0 2rem;
@@ -104,9 +111,11 @@ body {
   font-weight: 400;
   font-size: 3rem;
 }
-.header .title a {
+.header .title a,
+.header .title button {
   display: block;
   color: #fff;
+  font-size: inherit;
 }
 .header nav {
   display: -webkit-box;
@@ -240,14 +249,14 @@ main {
   font-weight: 400;
   font-size: 1.6rem;
 }
-.btn-nav.is-active {
+.btn-nav.is-active, .btn-nav.router-link-active {
   border-color: white;
   border-width: 1.5px;
 }
 .btn-primary {
   height: 4rem;
   padding: 0 2rem;
-  background-color: #6c2aef;
+  background-color: #454ce1;
   border-radius: 1rem;
   color: #fff;
   font-weight: 400;
@@ -302,6 +311,17 @@ main {
           align-items: center;
   height: 5rem;
 }
+.accordion .accordion-item .accordion-header.is-nav .accordion-btn {
+  width: 5rem;
+  padding: 0;
+  margin-left: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.accordion .accordion-item .accordion-header.is-nav .accordion-btn .icon-arrow {
+  margin: 0;
+}
 .accordion .accordion-item .accordion-header .accordion-btn {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -317,6 +337,12 @@ main {
 }
 .accordion .accordion-item .accordion-header .accordion-btn .icon-arrow {
   margin-left: auto;
+}
+.accordion .accordion-item .accordion-header .accordion-btn:disabled .accordion-title {
+  color: #ddd;
+}
+.accordion .accordion-item .accordion-header .accordion-btn:disabled .icon-arrow::after {
+  border-color: #ddd;
 }
 .accordion .accordion-item .accordion-header .accordion-btn[aria-expanded=true] .icon-arrow::after {
   display: inline-block;
@@ -362,11 +388,18 @@ main {
 }
 .accordion .accordion-item .accordion-body {
   overflow: hidden;
-  height: 0;
   background-color: #eee;
   -webkit-transition: height 0.3s ease-in-out;
   -o-transition: height 0.3s ease-in-out;
   transition: height 0.3s ease-in-out;
+}
+.accordion .accordion-item .accordion-body-enter-active, .accordion .accordion-item .accordion-body-leave-active {
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.accordion .accordion-item .accordion-body-enter-from, .accordion .accordion-item .accordion-body-leave-to {
+  height: 0 !important;
 }
 .accordion .accordion-item .accordion-body .accordion-content {
   padding: 2rem;
@@ -404,7 +437,6 @@ main {
 }
 
 .modal {
-  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -413,9 +445,6 @@ main {
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-}
-.modal.is-show {
-  display: block;
 }
 .modal .modal-dialog {
   height: 100%;
@@ -488,31 +517,29 @@ main {
   display: none;
 }
 
+.modal-open {
+  overflow: hidden;
+}
+
 .tooltip {
-  display: none;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10;
-  width: 20rem;
-  height: 10rem;
-  background-color: #6c2aef;
+  right: 0;
+  z-index: 99;
+  min-width: 18rem;
+  max-width: 50vw;
+  background-color: #454ce1;
   border-radius: 1rem;
   text-align: left;
-}
-.tooltip::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
 }
 .tooltip-content {
   position: relative;
   z-index: 1;
   width: 100%;
+  height: 100%;
+  min-width: 18rem;
+  max-width: 50vw;
   height: 100%;
   padding: 1rem;
   color: #fff;
@@ -526,10 +553,25 @@ main {
   top: -2rem;
   left: 2rem;
   border: 1rem solid transparent;
-  border-bottom-color: #6c2aef;
+  border-bottom-color: #454ce1;
 }
-.tooltip.is-show {
-  display: block;
+.tooltip.tooltip-left .tooltip-content::before {
+  left: 2rem;
+}
+.tooltip.tooltip-right .tooltip-content::before {
+  left: auto;
+  right: 2rem;
+}
+.tooltip.tooltip-center .tooltip-content::before {
+  left: calc(50% - 1rem);
+  right: auto;
+}
+.tooltip.tooltip-top .tooltip-content::before {
+  top: auto;
+  bottom: -2rem;
+  -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 .btn-tooltip {
@@ -549,6 +591,8 @@ main {
   color: #000;
   font-weight: 400;
   font-size: 1.2rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .btn-tooltip-close {
   position: absolute;
@@ -587,6 +631,17 @@ main {
           transform: rotate(-45deg);
 }
 
+.tooltip-dim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 98;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
 fieldset legend {
   margin-bottom: 1rem;
   color: #000;
@@ -613,12 +668,12 @@ fieldset legend {
   border: 0;
 }
 .form-checkbox-group .form-checkbox:checked ~ .form-checkbox-label::before {
-  border-color: #6c2aef;
+  border-color: #454ce1;
 }
 .form-checkbox-group .form-checkbox:checked ~ .form-checkbox-label::after {
   width: 1rem;
   height: 0.5rem;
-  border: 2px solid #6c2aef;
+  border: 2px solid #454ce1;
   border-top: 0;
   border-right: 0;
   -webkit-transform: rotate(-45deg);
@@ -627,6 +682,9 @@ fieldset legend {
   -webkit-transform-origin: 25% 25%;
       -ms-transform-origin: 25% 25%;
           transform-origin: 25% 25%;
+}
+.form-checkbox-group .form-checkbox:disabled ~ .form-checkbox-label {
+  color: #ddd;
 }
 .form-checkbox-group .form-checkbox-label {
   position: relative;
@@ -690,10 +748,13 @@ fieldset legend {
   border: 0;
 }
 .form-radio-group .form-radio:checked ~ .form-radio-label::before {
-  border-color: #6c2aef;
+  border-color: #454ce1;
 }
 .form-radio-group .form-radio:checked ~ .form-radio-label::after {
-  background-color: #6c2aef;
+  background-color: #454ce1;
+}
+.form-radio-group .form-radio:disabled ~ .form-radio-label {
+  color: #ddd;
 }
 .form-radio-group .form-radio-label {
   position: relative;
@@ -753,12 +814,19 @@ fieldset legend {
   color: #000;
   font-weight: 400;
   font-size: 1.4rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .form-input-group .form-inner-group .form-input:focus {
-  border-color: #6c2aef;
+  border-color: #454ce1;
+}
+.form-input-group .form-inner-group .form-input.is-error {
+  border-color: red;
+}
+.form-input-group .form-inner-group .form-input:invalid {
+  border-color: red;
 }
 .form-input-group .form-inner-group .btn-close {
-  display: none;
   position: absolute;
   top: 50%;
   right: 1.6rem;
@@ -793,8 +861,11 @@ fieldset legend {
       -ms-transform: rotate(-45deg);
           transform: rotate(-45deg);
 }
-.form-input-group .form-inner-group .btn-close.is-show {
-  display: block;
+.form-input-group .input-message {
+  margin-top: 0.6rem;
+  color: gray;
+  font-weight: 400;
+  font-size: 1.2rem;
 }
 .form-input-group .form-input-valid {
   display: none;
@@ -809,8 +880,8 @@ fieldset legend {
 
 .toast {
   position: fixed;
-  bottom: -6rem;
   left: 50%;
+  bottom: 6rem;
   width: calc(100% - 4rem);
   padding: 2rem;
   background-color: rgba(0, 0, 0, 0.8);
@@ -820,16 +891,38 @@ fieldset legend {
   color: #fff;
   font-weight: 400;
   font-size: 1.4rem;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
-  -webkit-transition: bottom 0.3s;
-  -o-transition: bottom 0.3s;
-  transition: bottom 0.3s;
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
 }
-.toast.is-show {
-  bottom: 6rem;
-  -webkit-transition: bottom 0.3s;
-  -o-transition: bottom 0.3s;
-  transition: bottom 0.3s;
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  -webkit-transform: translate(-50%, 100%);
+      -ms-transform: translate(-50%, 100%);
+          transform: translate(-50%, 100%);
+  opacity: 0;
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  -o-transition: transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
 }
